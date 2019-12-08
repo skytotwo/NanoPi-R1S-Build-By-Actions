@@ -94,6 +94,7 @@ jobs:
           ./scripts/feeds install -a
       - name: Costom Configure File
         run: |
+          cd /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt
           rm -f ./.config*
           wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config
           cp r1s-h5-config .config
