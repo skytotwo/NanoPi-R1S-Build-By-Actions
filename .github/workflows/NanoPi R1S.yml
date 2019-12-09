@@ -92,21 +92,26 @@ jobs:
           cd /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-      - name: Costom Configure File
-        run: |
-          cd /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt
-          rm -f ./.config*
-          wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config
-          cp r1s-h5-config .config
+          
       - name: Build OpenWrt
         run: |
           cd /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt-h5
           ./build.sh nanopi_r1s.mk
           
+      - name: Costom Configure File
+        run: |
+          cd /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt
+          make menuconfig
+          
+          wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config
+          cp r1s-h5-config /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt-h5/configs/my_config
+          
+          sed -i 's/TARGET_FRIENDLYWRT_CONFIG=config_h5/TARGET_FRIENDLYWRT_CONFIG=my_config/' /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt-h5/device/friendlyelec/h5/nanopi_r1s.mk
+          
       - name: Build OpenWrt Again
         run: |
           cd /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt-h5
-          ./build.sh nanopi_r1s.mk
+          ./build.sh friendlywrt
       
       - name: Zip Files
         run: |
