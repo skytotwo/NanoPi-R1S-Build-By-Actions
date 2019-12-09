@@ -101,7 +101,6 @@ jobs:
       - name: Costom Configure File
         run: |
           cd /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt
-          make menuconfig
           
           wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config
           cp r1s-h5-config /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt-h5/configs/my_config
@@ -111,7 +110,7 @@ jobs:
       - name: Build OpenWrt Again
         run: |
           cd /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt-h5
-          ./build.sh friendlywrt
+          ./build.sh nanopi_r1s.mk
       
       - name: Zip Files
         run: |
