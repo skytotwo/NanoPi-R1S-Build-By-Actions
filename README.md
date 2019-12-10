@@ -1,1 +1,2 @@
-# NanoPi-R1S-Build-By-Actions
+# build_openwrt_by_action
+build openwrt by action

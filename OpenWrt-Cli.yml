@@ -62,9 +62,8 @@ jobs:
       
       - name: Merge UpStearm OpenWrt
         run: |
-          rm -rf friendlywrt
-          mkdir friendlywrt
-          cd friendlywrt
+          cd friendlywrt-h5
+          rm -rf friendlywrt && mkdir friendlywrt && cd friendlywrt
           git init
           git config user.email abc@abc.com
           git config user.name abc
@@ -75,47 +74,52 @@ jobs:
       
       - name: Merge LEDE
         run: |
-          cd ../ 
+          cd friendlywrt-h5
           git clone https://github.com/coolsnowwolf/lede
-          cp -a ./lede/package/lean /home/runner/work/build_openwrt_by_action/build_openwrt_by_action/friendlywrt/package/
-          
-          cd /home/runner/work/build_openwrt_by_action/build_openwrt_by_action/friendlywrt/
-          
+          cd friendlywrt
+          cp -r ../lede/package/lean package/         
           sed -i 's/https:\/\/git.openwrt.org\/project\/luci.git;openwrt-18.06/https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default  
-
+          
       - name: Update Target.mk
         run: |
-          cd /home/runner/work/build_openwrt_by_action/build_openwrt_by_action/friendlywrt/include 
+          cd friendlywrt-h5/friendlywrt/include 
           sed -i 's/dnsmasq /dnsmasq-full default-settings luci/' target.mk    
           
       - name: Update Feeds
         run: |
-          cd /home/runner/work/build_openwrt_by_action/build_openwrt_by_action/friendlywrt
+          cd friendlywrt-h5/friendlywrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-
+          
       - name: Costom Configure File
         run: |
-          cd /home/runner/work/NanoPi-R1S-Build-By-Actions/NanoPi-R1S-Build-By-Actions/friendlywrt
+          cd friendlywrt-h5/friendlywrt
           rm -f ./.config*
-          wget https://raw.githubusercontent.com/skytotwo/build_openwrt_by_action/master/r1s-h5-config
-          cp r1s-h5-config .config
-
+          wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config
+          cp r1s-h5-config friendlywrt-h5/friendlywrt/.config
+      
+      - name: Download package
+        if: always()
+        run: |
+          cd friendlywrt-h5/friendlywrt
+          make download -j8
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
+          
       - name: Build OpenWrt
         run: |
-          cd /home/runner/work/build_openwrt_by_action/build_openwrt_by_action/friendlywrt-h5
+          cd friendlywrt-h5
           ./build.sh nanopi_r1s.mk
       
       - name: Zip Files
         run: |
-          find /home/runner/work/build_openwrt_by_action/build_openwrt_by_action/friendlywrt-h5/out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
+          find friendlywrt-h5/out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
           
       - name: Assemble Artifact
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          find /home/runner/work/build_openwrt_by_action/build_openwrt_by_action/friendlywrt-h5/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
-
+          find friendlywrt-h5/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
