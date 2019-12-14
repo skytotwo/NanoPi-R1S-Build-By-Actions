@@ -6,6 +6,7 @@
 # <https://github.com/skytotwo/NanoPi-R1S-Build-By-Actions>
 #
 # Write by Jolly 2019/12/7
+# last update at 2019/12/14
 
 name: NanoPi-R1s H5 OpenWrt Build
 
@@ -35,18 +36,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          docker rmi `docker images -q`
-          echo "Deleting files, please wait ..."
-          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php
-          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
-          sudo -E apt-get update
-          sudo -E apt-get -y install build-essential asciidoc binutils bc bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
-          sudo -E apt-get -y autoremove --purge
-          sudo -E apt-get clean
-      
-      - name: Install Env Tools
-        run: |
-          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
+          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash         
           
       - name: Install Repo
         run: |
@@ -58,19 +48,14 @@ jobs:
           mkdir friendlywrt-h5
           cd friendlywrt-h5
           repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master -m h5.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
-          repo sync -c  --no-clone-bundle
       
       - name: Merge UpStearm OpenWrt
         run: |
           cd friendlywrt-h5
-          rm -rf friendlywrt && mkdir friendlywrt && cd friendlywrt
-          git init
-          git config user.email abc@abc.com
-          git config user.name abc
-          git remote add origin https://github.com/friendlyarm/friendlywrt.git
-          git remote add upstream https://github.com/openwrt/openwrt.git
-          git pull origin master-v18.06.1
-          git pull upstream openwrt-18.06 --no-edit
+          cd .repo/manifests
+          rm -f ./h5.xml
+          wget https://raw.githubusercontent.com/skytotwo/transferUtils/master/h5.xml
+          repo sync -c  --no-clone-bundle
       
       - name: Merge LEDE
         run: |
