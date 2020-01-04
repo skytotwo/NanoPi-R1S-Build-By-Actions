@@ -5723,7 +5723,7 @@ CONFIG_STRACE_NONE=y
 # CONFIG_PACKAGE_ugps is not set
 # CONFIG_PACKAGE_uledd is not set
 # CONFIG_PACKAGE_unshare is not set
-# CONFIG_PACKAGE_usb-modeswitch is not set
+CONFIG_PACKAGE_usb-modeswitch=y
 # CONFIG_PACKAGE_usbmuxd is not set
 # CONFIG_PACKAGE_usbreset is not set
 # CONFIG_PACKAGE_usbutils is not set
