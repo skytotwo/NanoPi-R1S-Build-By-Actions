@@ -6,7 +6,7 @@
 # <https://github.com/skytotwo/NanoPi-R1S-Build-By-Actions>
 #
 # Write by Jolly 2019/12/7
-# last update at 2019/12/19.1
+# last update at 2019/12/19
 
 name: NanoPi-R1s H5 OpenWrt 19.07 Build
 
@@ -54,9 +54,9 @@ jobs:
           cd friendlywrt-h5
           cd .repo/manifests
           rm -f ./h5.xml
-          wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/source_xml/h5_19.07.xml
-          cp h5_19.07.xml h5.xml
-          rm -rf ./h5_19.07.xml
+          #wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/source_xml/h5_19.07.xml
+          cp ../../../source_xml/h5_19.07.xml h5.xml
+          #rm -rf ./h5_19.07.xml
           repo sync -c  --no-clone-bundle
       
       - name: Merge LEDE
@@ -88,8 +88,8 @@ jobs:
         run: |
           cd friendlywrt-h5/friendlywrt
           rm -f ./.config*
-          wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config
-          cp r1s-h5-config .config
+          #wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config
+          cp ../../r1s-h5-config .config
       
       - name: Download package
         if: always()
