@@ -53,8 +53,8 @@ jobs:
         run: |
           cd friendlywrt-h5
           cd .repo/manifests
-          rm -f ./h5.xml
-          curl https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/source_xml/h5_19.07.xml > h5.xml
+          #rm -f ./h5.xml
+          #curl https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/source_xml/h5_19.07.xml > h5.xml
           #cp ../../../source_xml/h5_19.07.xml h5.xml
           repo sync -c  --no-clone-bundle
       
