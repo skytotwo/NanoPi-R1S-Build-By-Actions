@@ -88,8 +88,9 @@ jobs:
         run: |
           cd friendlywrt-h5/friendlywrt
           rm -f ./.config*
-          curl https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config > .config
-          #cp ../../r1s-h5-config .config
+          #curl https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config > .config
+          cp ../../r1s-h5-config .config
+          make defconfig
       
       - name: Download package
         if: always()
