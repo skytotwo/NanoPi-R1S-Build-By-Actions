@@ -114,7 +114,7 @@ jobs:
           rm -rf ./artifact/
           mkdir -p ./artifact/
           #find friendlywrt-h5/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
-          mv friendlywrt-h5/out ./artifact/
+          mv friendlywrt-h5/out/*img* ./artifact/
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
