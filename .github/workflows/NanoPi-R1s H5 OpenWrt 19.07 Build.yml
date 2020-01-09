@@ -108,6 +108,7 @@ jobs:
       - name: Zip Files
         run: |
           #find friendlywrt-h5/out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
+          gzip friendlywrt-h5/out/*
           
       - name: Assemble Artifact
         run: |
