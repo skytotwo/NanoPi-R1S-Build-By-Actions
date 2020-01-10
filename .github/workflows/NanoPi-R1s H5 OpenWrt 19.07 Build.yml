@@ -96,6 +96,7 @@ jobs:
       - name: Costom Configure File
         run: |
           cd friendlywrt-h5
+          sed -i '/docker/d;/DOCKER/d' ./configs/config_h5
           cat >> ./configs/config_h5 <<EOF
           
           CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
