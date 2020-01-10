@@ -92,7 +92,6 @@ jobs:
           cd friendlywrt-h5
           cat >> ./configs/config_h5 <<EOF
           CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
-          CONFIG_PACKAGE_ipv6helper=y
           CONFIG_PACKAGE_luci-app-adbyby-plus=y
           CONFIG_PACKAGE_luci-app-samba=y
           CONFIG_PACKAGE_luci-app-smartdns=y
