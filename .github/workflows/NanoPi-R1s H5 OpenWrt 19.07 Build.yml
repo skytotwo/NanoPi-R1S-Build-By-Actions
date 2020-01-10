@@ -83,9 +83,9 @@ jobs:
           
       - name: Update Feeds
         run: |
-          cd friendlywrt-h5/friendlywrt
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
+          #cd friendlywrt-h5/friendlywrt
+          #./scripts/feeds update -a
+          #./scripts/feeds install -a
           
       - name: Costom Configure File
         run: |
@@ -126,10 +126,10 @@ jobs:
       - name: Download package
         if: always()
         run: |
-          cd friendlywrt-h5/friendlywrt
-          make download -j8
-          find dl -size -1024c -exec ls -l {} \;
-          find dl -size -1024c -exec rm -f {} \;
+          #cd friendlywrt-h5/friendlywrt
+          #make download -j8
+          #find dl -size -1024c -exec ls -l {} \;
+          #find dl -size -1024c -exec rm -f {} \;
           
       - name: Build OpenWrt
         run: |
