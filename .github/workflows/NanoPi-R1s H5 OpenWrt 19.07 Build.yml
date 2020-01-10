@@ -120,7 +120,7 @@ jobs:
           CONFIG_PACKAGE_collectd-mod-cpufreq=y
           # CONFIG_FEED_rosy is not set
           EOF
-          make defconfig
+          #make defconfig
       
       - name: Download package
         if: always()
