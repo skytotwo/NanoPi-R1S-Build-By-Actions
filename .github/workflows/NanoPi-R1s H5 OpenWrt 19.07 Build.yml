@@ -124,6 +124,7 @@ jobs:
           # CONFIG_ALL_KMODS is not set
           # CONFIG_ALL_NONSHARED is not set
           # CONFIG_DEVEL is not set
+          # CONFIG_PACKAGE_luci-lib-iptparser is not set
           EOF
           #make defconfig
       
