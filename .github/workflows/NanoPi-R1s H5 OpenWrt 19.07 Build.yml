@@ -121,6 +121,9 @@ jobs:
           CONFIG_PACKAGE_collectd-mod-thermal=y
           CONFIG_PACKAGE_collectd-mod-cpufreq=y
           # CONFIG_FEED_rosy is not set
+          # CONFIG_ALL_KMODS is not set
+          # CONFIG_ALL_NONSHARED is not set
+          # CONFIG_DEVEL is not set
           EOF
           #make defconfig
       
