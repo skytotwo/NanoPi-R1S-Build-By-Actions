@@ -53,6 +53,7 @@ jobs:
         run: |
           cd friendlywrt-h5
           cd .repo/manifests
+          rm -f ./h5.xml
           cp ../../../source_xml/h5_19.07.xml h5.xml
           repo sync -c  --no-clone-bundle
           df -h
