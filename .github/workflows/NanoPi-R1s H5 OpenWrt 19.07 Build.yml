@@ -36,13 +36,13 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          docker rmi `docker images -q`
-          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php
-          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
-          sudo -E apt-get update
+          #docker rmi `docker images -q`
+          #sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php
+          #sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+          #sudo -E apt-get update
           wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
-          sudo -E apt-get -y autoremove --purge
-          sudo -E apt-get clean
+          #sudo -E apt-get -y autoremove --purge
+          #sudo -E apt-get clean
           
       - name: Install Repo
         run: |
@@ -55,10 +55,11 @@ jobs:
       - name: Download Source
         run: |
           cd friendlywrt-h5
-          cd .repo/manifests
-          rm -f ./h5.xml
-          cp ../../../source_xml/h5_19.07.xml h5.xml
+          rm -f .repo/manifests/h5.xml
+          cp ../source_xml/h5_19.07.xml .repo/manifests/h5.xml
+          mkdir -p friendlywrt /mnt/friendlywrt && sudo mount --bind /mnt/friendlywrt friendlywrt
           repo sync -c  --no-clone-bundle
+          cat .repo/manifests/h5.xml
       
       - name: Merge Lean's Package
         run: |
