@@ -58,7 +58,7 @@ jobs:
           cd friendlywrt-h5
           rm -f .repo/manifests/h5.xml
           cp ../source_xml/h5_19.07.xml .repo/manifests/h5.xml
-          mkdir -p friendlywrt /mnt/friendlywrt && sudo mount --bind /mnt/friendlywrt friendlywrt
+          sudo mkdir -p friendlywrt /mnt/friendlywrt && sudo mount --bind /mnt/friendlywrt friendlywrt
           repo sync -c  --no-clone-bundle
           cat .repo/manifests/h5.xml
       
@@ -140,10 +140,7 @@ jobs:
       - name: Build OpenWrt
         run: |
           cd friendlywrt-h5
-          #sed -i 's/make -j$(nproc)/make -j1/' scripts/mk-friendlywrt.sh
-          #cp configs/config_h5 friendlywrt/.config
-          #cd friendlywrt
-          #make defconfig
+          sed -i 's/make -j$(nproc)/make -j3/' scripts/mk-friendlywrt.sh
           ./build.sh nanopi_r1s.mk
           df -h
           
