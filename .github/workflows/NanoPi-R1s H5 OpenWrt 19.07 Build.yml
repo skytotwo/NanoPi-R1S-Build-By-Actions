@@ -64,6 +64,7 @@ jobs:
       
       - name: Merge Lean's Package
         run: |
+          exit 0
           cd friendlywrt-h5
           git clone https://github.com/klever1988/lede
           cd friendlywrt
@@ -76,16 +77,7 @@ jobs:
           cat feeds.conf.default
           sed -i 's/exit 0//' package/lean/default-settings/files/zzz-default-settings
           echo 'chown -R root:root /usr/share/netdata' >> package/lean/default-settings/files/zzz-default-settings
-          df -h
-      
-      - name: Custom Applications
-        run: |
-          #cd friendlywrt-h5/friendlywrt/package
-          #git clone https://github.com/Baozisoftware/luci-app-koolproxy
-          
-      - name: Update Target.mk
-        run: |
-          cd friendlywrt-h5/friendlywrt/include 
+          cd include 
           sed -i 's/dnsmasq /dnsmasq-full default-settings luci /' target.mk    
           
       - name: Update Feeds
@@ -98,7 +90,7 @@ jobs:
         run: |
           cd friendlywrt-h5
           sed -i '/docker/d;/DOCKER/d' ./configs/config_h5
-          cat >> ./configs/config_h5 <<EOF
+          cat >> ./configs/config_h55 <<EOF
           
           CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
           CONFIG_PACKAGE_ipv6helper=y
