@@ -64,7 +64,6 @@ jobs:
       
       - name: Merge Lean's Package
         run: |
-          exit 0
           cd friendlywrt-h5
           git clone https://github.com/klever1988/lede
           cd friendlywrt
@@ -90,7 +89,7 @@ jobs:
         run: |
           cd friendlywrt-h5
           sed -i '/docker/d;/DOCKER/d' ./configs/config_h5
-          cat >> ./configs/config_h55 <<EOF
+          cat >> ./configs/config_h5 <<EOF
           
           CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
           CONFIG_PACKAGE_ipv6helper=y
