@@ -150,7 +150,7 @@ jobs:
           cd friendlywrt-h5
           #sed -i 's/make -j$(nproc)/make -j1/' scripts/mk-friendlywrt.sh
           #cp configs/config_h5 friendlywrt/.config
-          cd friendlywrt
+          #cd friendlywrt
           #make defconfig
           ./build.sh nanopi_r1s.mk
           df -h
