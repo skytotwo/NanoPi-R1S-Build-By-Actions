@@ -58,8 +58,7 @@ jobs:
           cd friendlywrt-h5
           rm -f .repo/manifests/h5.xml
           cp ../source_xml/h5_19.07.xml .repo/manifests/h5.xml
-          sudo mkdir -p -m 777 /mnt/storage
-          mkdir -p friendlywrt /mnt/storage/friendlywrt && sudo mount --bind /mnt/storage/friendlywrt friendlywrt
+          #sudo mkdir -p -m 777 /mnt/storage && mkdir -p friendlywrt /mnt/storage/friendlywrt && sudo mount --bind /mnt/storage/friendlywrt friendlywrt
           repo sync -c  --no-clone-bundle
           cat .repo/manifests/h5.xml
       
