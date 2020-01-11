@@ -131,6 +131,8 @@ jobs:
           # CONFIG_ALL_NONSHARED is not set
           # CONFIG_DEVEL is not set
           # CONFIG_PACKAGE_luci-lib-iptparser is not set
+          # CONFIG_PACKAGE_luci-app-samba is not set
+          # CONFIG_PACKAGE_samba36-server is not set
           EOF
           
       - name: Build OpenWrt
