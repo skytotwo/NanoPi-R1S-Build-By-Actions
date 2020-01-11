@@ -40,22 +40,19 @@ jobs:
           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php
           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
           sudo -E apt-get update
-          #sudo -E apt-get -y autoremove --purge
           wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
+          #sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
           
       - name: Install Repo
         run: |
           git clone https://github.com/friendlyarm/repo
           sudo cp repo/repo /usr/bin/
-          
-      - name: Download Source
-        run: |
           mkdir friendlywrt-h5
           cd friendlywrt-h5
           repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master -m h5.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
       
-      - name: Merge UpStearm OpenWrt
+      - name: Download Source
         run: |
           cd friendlywrt-h5
           cd .repo/manifests
@@ -63,7 +60,7 @@ jobs:
           cp ../../../source_xml/h5_19.07.xml h5.xml
           repo sync -c  --no-clone-bundle
       
-      - name: Merge LEDE
+      - name: Merge Lean's Package
         run: |
           cd friendlywrt-h5
           git clone https://github.com/klever1988/lede
@@ -95,7 +92,7 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           
-      - name: Costom Configure File
+      - name: Custom Configure File
         run: |
           cd friendlywrt-h5
           sed -i '/docker/d;/DOCKER/d' ./configs/config_h5
@@ -135,37 +132,28 @@ jobs:
           # CONFIG_DEVEL is not set
           # CONFIG_PACKAGE_luci-lib-iptparser is not set
           EOF
-          #make defconfig
-      
-      - name: Download package
-        if: always()
-        run: |
-          #cd friendlywrt-h5/friendlywrt
-          #make download -j8
-          #find dl -size -1024c -exec ls -l {} \;
-          #find dl -size -1024c -exec rm -f {} \;
           
       - name: Build OpenWrt
         run: |
           cd friendlywrt-h5
           #sed -i 's/make -j$(nproc)/make -j1/' scripts/mk-friendlywrt.sh
-          cp configs/config_h5 friendlywrt/.config
-          cd friendlywrt
-          make defconfig
-          #./build.sh nanopi_r1s.mk
+          #cp configs/config_h5 friendlywrt/.config
+          #cd friendlywrt
+          #make defconfig
+          ./build.sh nanopi_r1s.mk
           df -h
-      
+          
       - name: Zip Files
         run: |
           #find friendlywrt-h5/out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
-          #gzip friendlywrt-h5/out/*.img
+          gzip friendlywrt-h5/out/*.img
           
       - name: Assemble Artifact
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
           #find friendlywrt-h5/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
-          #mv friendlywrt-h5/out/*img* ./artifact/
+          mv friendlywrt-h5/out/*img* ./artifact/
           cp friendlywrt-h5/friendlywrt/.config ./artifact/
       - name: Upload Artifact
         uses: actions/upload-artifact@master
