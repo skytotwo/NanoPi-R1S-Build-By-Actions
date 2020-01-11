@@ -91,9 +91,9 @@ jobs:
           
       - name: Update Feeds
         run: |
-          #cd friendlywrt-h5/friendlywrt
-          #./scripts/feeds update -a
-          #./scripts/feeds install -a
+          cd friendlywrt-h5/friendlywrt
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
           
       - name: Costom Configure File
         run: |
@@ -149,23 +149,23 @@ jobs:
         run: |
           cd friendlywrt-h5
           #sed -i 's/make -j$(nproc)/make -j1/' scripts/mk-friendlywrt.sh
-          #cp configs/config_h5 friendlywrt/.config
-          #cd friendlywrt
-          #make defconfig
-          ./build.sh nanopi_r1s.mk
+          cp configs/config_h5 friendlywrt/.config
+          cd friendlywrt
+          make defconfig
+          #./build.sh nanopi_r1s.mk
           df -h
       
       - name: Zip Files
         run: |
           #find friendlywrt-h5/out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
-          gzip friendlywrt-h5/out/*.img
+          #gzip friendlywrt-h5/out/*.img
           
       - name: Assemble Artifact
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
           #find friendlywrt-h5/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
-          mv friendlywrt-h5/out/*img* ./artifact/
+          #mv friendlywrt-h5/out/*img* ./artifact/
           cp friendlywrt-h5/friendlywrt/.config ./artifact/
       - name: Upload Artifact
         uses: actions/upload-artifact@master
