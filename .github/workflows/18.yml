@@ -69,7 +69,7 @@ jobs:
           echo 'src-git rosy https://github.com/rosywrt/luci-theme-rosy.git;openwrt-18.06' >> feeds.conf.default
           cat feeds.conf.default
           #sed -i 's/exit 0//' package/lean/default-settings/files/zzz-default-settings
-          echo 'chown -R root:root /usr/share/netdata' >> package/lean/default-settings/files/zzz-default-settings
+          #echo 'chown -R root:root /usr/share/netdata' >> package/lean/default-settings/files/zzz-default-settings
           cd include 
           sed -i 's/dnsmasq /dnsmasq-full luci /' target.mk    
           
