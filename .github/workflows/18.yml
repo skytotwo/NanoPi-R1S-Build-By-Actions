@@ -85,7 +85,8 @@ jobs:
           cat >> ./configs/config_h5 <<EOF	
           	
           CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y	
-          CONFIG_PACKAGE_ipv6helper=y	
+          CONFIG_PACKAGE_ipv6helper=y
+          CONFIG_PACKAGE_luci-app-ssr-plus=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks=y	
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y	
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y	
