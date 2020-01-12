@@ -12,8 +12,8 @@ name: NanoPi-R1s H5 OpenWrt 19.07 Build
 
 on:
   push:
-    branches: 
-      - master
+    path: 
+      - '.github/workflows/NanoPi-R1s H5 OpenWrt 19.07 Build.yml'
   # schedule:
   #   - cron: 0 20 * * *
   # release:
