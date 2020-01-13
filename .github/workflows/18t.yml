@@ -81,6 +81,7 @@ jobs:
           
       - name: Custom Configure File
         run: |
+          cp r1s-h5-config friendlywrt-h5/friendlywrt/.config && exit 0
           cd friendlywrt-h5
           sed -i '/docker/d;/DOCKER/d' ./configs/config_h5
           cat >> ./configs/config_h5 <<EOF	
