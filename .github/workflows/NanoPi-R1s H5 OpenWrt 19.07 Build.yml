@@ -39,7 +39,8 @@ jobs:
           #docker rmi `docker images -q`
           #sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php
           #sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
-          #sudo -E apt-get update
+          sudo rm -rf /etc/apt/sources.list.d
+          sudo -E apt-get update
           wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
           #sudo -E apt-get -y autoremove --purge
           #sudo -E apt-get clean
@@ -68,23 +69,17 @@ jobs:
           git clone https://github.com/klever1988/lede
           cd friendlywrt
           cp -r ../lede/package/lean package/
-          sed -i 's/http.*luci.*/https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default
-          sed -i 's/http.*feed\/packages.*/https:\/\/github.com\/coolsnowwolf\/packages/' feeds.conf.default
-          sed -i 's/http.*routing.*/https:\/\/git.openwrt.org\/feed\/routing.git;openwrt-19.07/' feeds.conf.default
-          sed -i 's/http.*telephony.*/https:\/\/git.openwrt.org\/feed\/telephony.git;openwrt-19.07/' feeds.conf.default
+          #sed -i 's/http.*luci.*/https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default
+          #sed -i 's/http.*feed\/packages.*/https:\/\/github.com\/coolsnowwolf\/packages/' feeds.conf.default
+          #sed -i 's/http.*routing.*/https:\/\/git.openwrt.org\/feed\/routing.git;openwrt-19.07/' feeds.conf.default
+          #sed -i 's/http.*telephony.*/https:\/\/git.openwrt.org\/feed\/telephony.git;openwrt-19.07/' feeds.conf.default
           echo 'src-git rosy https://github.com/rosywrt/luci-theme-rosy.git;openwrt-18.06' >> feeds.conf.default
           cat feeds.conf.default
           sed -i 's/exit 0//' package/lean/default-settings/files/zzz-default-settings
           echo 'chown -R root:root /usr/share/netdata' >> package/lean/default-settings/files/zzz-default-settings
           cd include 
           sed -i 's/dnsmasq /dnsmasq-full default-settings luci /' target.mk    
-          
-      - name: Update Feeds
-        run: |
-          cd friendlywrt-h5/friendlywrt
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
-          
+
       - name: Custom Configure File
         run: |
           cd friendlywrt-h5
@@ -133,7 +128,7 @@ jobs:
       - name: Build OpenWrt
         run: |
           cd friendlywrt-h5
-          sed -i 's/make -j$(nproc)/make -j1/' scripts/mk-friendlywrt.sh
+          sed -i 's/make -j$(nproc)/make -j3/' scripts/mk-friendlywrt.sh
           cat scripts/mk-friendlywrt.sh
           ./build.sh nanopi_r1s.mk
           df -h
