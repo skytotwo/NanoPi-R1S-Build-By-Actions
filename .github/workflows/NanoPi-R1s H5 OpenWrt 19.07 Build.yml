@@ -83,7 +83,7 @@ jobs:
       - name: Custom Configure File
         run: |
           cd friendlywrt-h5
-          sed -i '/docker/d;/DOCKER/d' ./configs/config_h5
+          #sed -i '/docker/d;/DOCKER/d' ./configs/config_h5
           
       - name: Build OpenWrt
         run: |
