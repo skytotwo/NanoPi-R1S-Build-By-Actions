@@ -40,8 +40,8 @@ jobs:
           #sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php
           #sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
           sudo rm -rf /etc/apt/sources.list.d
-          sudo -E apt-get update
-          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
+          #sudo -E apt-get update
+          curl https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
           #sudo -E apt-get -y autoremove --purge
           #sudo -E apt-get clean
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk
