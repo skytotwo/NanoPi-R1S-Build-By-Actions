@@ -88,7 +88,7 @@ jobs:
       - name: Build OpenWrt
         run: |
           cd friendlywrt-h5
-          sed -i 's/make -j$(nproc)/make -j3/' scripts/mk-friendlywrt.sh
+          #sed -i 's/make -j$(nproc)/make -j3/' scripts/mk-friendlywrt.sh
           cat scripts/mk-friendlywrt.sh
           ./build.sh nanopi_r1s.mk
           df -h
