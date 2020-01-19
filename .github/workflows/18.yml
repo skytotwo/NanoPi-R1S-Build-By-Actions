@@ -83,7 +83,7 @@ jobs:
           cd friendlywrt-h5
           sed -i '/docker/d;/DOCKER/d' ./configs/config_h5
           cat >> ./configs/config_h5 <<EOF	
-          	
+          
           CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y	
           CONFIG_PACKAGE_ipv6helper=y	
           CONFIG_PACKAGE_luci-app-adbyby-plus=y	
@@ -121,7 +121,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-samba is not set	
           # CONFIG_PACKAGE_samba36-server is not set	
           # CONFIG_DISPLAY_SUPPORT is not set
-          	
+          
           EOF
           
       - name: Build OpenWrt
