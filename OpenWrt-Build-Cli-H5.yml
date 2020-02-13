@@ -98,7 +98,7 @@ jobs:
       - name: Make sun50i-h5-fixup
         run: |
           cd friendlywrt-h5/kernel/arch/arm64/boot/dts/allwinner/overlays/
-          mkimage -C none -A arm -T script -d sun50i-h5-fixup.cmd sun50i-h5-fixup.scr
+          wget sun50i-h5-fixup.scr
           
       - name: Build OpenWrt
         run: |
