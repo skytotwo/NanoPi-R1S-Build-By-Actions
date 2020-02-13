@@ -98,7 +98,7 @@ jobs:
       - name: Make sun50i-h5-fixup
         run: |
           cd friendlywrt-h5/kernel/arch/arm64/boot/dts/allwinner/overlays/
-          wget sun50i-h5-fixup.scr
+          wget https://github.com/Toutatisel/NanoPi-R1S-Build-By-Actions/blob/master/sun50i-h5-fixup.scr
           
       - name: Build OpenWrt
         run: |
