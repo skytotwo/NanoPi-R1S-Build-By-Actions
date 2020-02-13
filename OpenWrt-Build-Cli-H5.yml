@@ -36,7 +36,7 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash         
+          wget -O - https://raw.githubusercontent.com/Toutatisel/build-env-on-ubuntu-bionic/master/install.sh | bash         
           
       - name: Install Repo
         run: |
