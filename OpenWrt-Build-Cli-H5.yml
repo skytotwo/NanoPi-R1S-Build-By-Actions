@@ -93,12 +93,7 @@ jobs:
           cd friendlywrt-h5/friendlywrt
           make download -j8
           find dl -size -1024c -exec ls -l {} \;
-          find dl -size -1024c -exec rm -f {} \;
-             
-      - name: Make sun50i-h5-fixup
-        run: |
-          cd friendlywrt-h5/kernel/arch/arm64/boot/dts/allwinner/overlays/
-          mkimage -C none -A arm -T script -d sun50i-h5-fixup.cmd sun50i-h5-fixup.scr
+          find dl -size -1024c -exec rm -f {} \;            
           
       - name: Build OpenWrt
         run: |
