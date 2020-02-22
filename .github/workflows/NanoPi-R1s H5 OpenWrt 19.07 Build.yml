@@ -8,7 +8,7 @@
 # Write by Jolly 2019/12/7
 # last update at 2019/12/19
 
-name: NanoPi-R1s H5 OpenWrt 19.07 Build
+name: NanoPi-R1s H3 OpenWrt 19.07 Build
 
 on:
   push:
@@ -45,23 +45,23 @@ jobs:
           
       - name: Download Source
         run: |
-          mkdir friendlywrt-h5
-          cd friendlywrt-h5
-          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master -m h5.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
+          mkdir friendlywrt-h3
+          cd friendlywrt-h3
+          repo init -u https://github.com/friendlyarm/friendlywrt_manifests -b master -m h3.xml --repo-url=https://github.com/friendlyarm/repo  --no-clone-bundle
       
       - name: Merge UpStearm OpenWrt
         run: |
-          cd friendlywrt-h5
+          cd friendlywrt-h3
           cd .repo/manifests
-          rm -f ./h5.xml
-          wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/source_xml/h5_19.07.xml
-          cp h5_19.07.xml h5.xml
-          rm -rf ./h5_19.07.xml
+          rm -f ./h3.xml
+          wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/source_xml/h3_19.07.xml
+          cp h3_19.07.xml h3.xml
+          rm -rf ./h3_19.07.xml
           repo sync -c  --no-clone-bundle
       
       - name: Merge LEDE
         run: |
-          cd friendlywrt-h5
+          cd friendlywrt-h3
           git clone https://github.com/coolsnowwolf/lede
           cd friendlywrt
           cp -r ../lede/package/lean package/
@@ -70,51 +70,63 @@ jobs:
       
       - name: Custom Applications
         run: |
-          cd friendlywrt-h5/friendlywrt/package
+          cd friendlywrt-h3/friendlywrt/package
           git clone https://github.com/Baozisoftware/luci-app-koolproxy
           
       - name: Update Target.mk
         run: |
-          cd friendlywrt-h5/friendlywrt/include 
-          sed -i 's/dnsmasq /dnsmasq-full default-settings luci /' target.mk    
+          cd friendlywrt-h3/friendlywrt/include 
+          sed -i 's/dnsmasq /dnsmasq-full default-settings luci/' target.mk    
           
       - name: Update Feeds
         run: |
-          cd friendlywrt-h5/friendlywrt
+          cd friendlywrt-h3/friendlywrt
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           
       - name: Costom Configure File
         run: |
-          cd friendlywrt-h5/friendlywrt
+          cd friendlywrt-h3/friendlywrt
           rm -f ./.config*
-          wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config
-          cp r1s-h5-config .config
+          wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h3-config
+          cp r1s-h3-config .config
       
       - name: Download package
         if: always()
         run: |
-          cd friendlywrt-h5/friendlywrt
+          cd friendlywrt-h3/friendlywrt
           make download -j8
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
           
       - name: Build OpenWrt
         run: |
-          cd friendlywrt-h5
+          cd friendlywrt-h3
           ./build.sh nanopi_r1s.mk
       
       - name: Zip Files
         run: |
-          find friendlywrt-h5/out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
+          find friendlywrt-h3/out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
           
       - name: Assemble Artifact
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
-          find friendlywrt-h5/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
+          find friendlywrt-h3/out/ -name "FriendlyWrt_*img.zip*" | xargs -i mv -f {} ./artifact/
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
-          name: FriendlyWrt_NanoPi-R1S H5 v19.07
+          name: FriendlyWrt_NanoPi-R1S H3 v19.07
           path: ./artifact/
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
