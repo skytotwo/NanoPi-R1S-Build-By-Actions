@@ -89,6 +89,12 @@ jobs:
           cd friendlywrt
           make defconfig && make download -j8
           make -s -j$(nproc) || make V=s -j1
+          
+      - name: Build SD img
+        run: |
+          cd friendlywrt-h5
+          sed -i '130,150 {/build_friendlywrt/d}' scripts/build.sh
+          ./build.sh nanopi_r1s.mk
       
       - name: Zip Files
         run: |
