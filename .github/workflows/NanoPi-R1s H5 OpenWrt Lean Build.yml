@@ -52,15 +52,7 @@ jobs:
           repo sync -c --no-clone-bundle -j8
       
       - name: Merge UpStearm OpenWrt
-        run: |
-          #cd friendlywrt-h5
-          #cd .repo/manifests
-          #rm -f ./h5.xml
-          #wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/source_xml/h5_19.07.xml
-          #cp h5_19.07.xml h5.xml
-          #rm -rf ./h5_19.07.xml
-          #repo sync -c  --no-clone-bundle
-          
+        run: |          
           cd friendlywrt-h5
           . ../remove_unused_config.sh
           cat ../app_config.seed >> configs/config_h5
@@ -88,40 +80,6 @@ jobs:
           ./scripts/feeds update -a && ./scripts/feeds install -a
           sed -i '/Load Average/i\<tr><td width="33%"><%:CPU Temperature%></td><td><%=luci.sys.exec("cut -c1-2 /sys/class/thermal/thermal_zone0/temp")%></td></tr>' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
           sed -i 's/pcdata(boardinfo.system or "?")/"ARMv8"/' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
-      
-      #- name: Merge LEDE
-      #  run: |
-      #    cd friendlywrt-h5
-      #    git clone https://github.com/coolsnowwolf/lede
-      #    cd friendlywrt
-      #    cp -r ../lede/package/lean package/
-      #    sed -i 's/https:\/\/git.openwrt.org\/project\/luci.git^039ef1f4deba725d3591b159bbc9569885d68131/https:\/\/github.com\/coolsnowwolf\/luci/' feeds.conf.default
-      #    sed -i 's/https:\/\/git.openwrt.org\/feed\/packages.git^00803ffc91e80b16e9c1603ff32106d42e255923/https:\/\/github.com\/coolsnowwolf\/packages/' feeds.conf.default          
-      
-      #- name: Custom Applications
-      #  run: |
-      #    cd friendlywrt-h5/friendlywrt/package
-      #    git clone https://github.com/Baozisoftware/luci-app-koolproxy
-          
-      #- name: Update Target.mk
-      #  run: |
-      #    cd friendlywrt-h5/friendlywrt/include 
-      #    sed -i 's/dnsmasq /dnsmasq-full default-settings luci /' target.mk    
-          
-      #- name: Costom Configure File
-      #  run: |
-      #    cd friendlywrt-h5/friendlywrt
-      #    rm -f ./.config*
-      #    wget https://raw.githubusercontent.com/skytotwo/NanoPi-R1S-Build-By-Actions/master/r1s-h5-config
-      #    cp r1s-h5-config .config
-      
-      #- name: Download package
-      #  if: always()
-      #  run: |
-      #    cd friendlywrt-h5/friendlywrt
-      #    make download -j8
-      #    find dl -size -1024c -exec ls -l {} \;
-      #    find dl -size -1024c -exec rm -f {} \;
           
       - name: Build OpenWrt
         run: |
