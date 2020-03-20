@@ -103,6 +103,7 @@ jobs:
           find friendlywrt-h5/out/ -name "FriendlyWrt_*img*" | xargs -i zip -r {}.zip {}
           
       - name: Assemble Artifact
+        id: assemble_artifact
         run: |
           rm -rf ./artifact/
           mkdir -p ./artifact/
