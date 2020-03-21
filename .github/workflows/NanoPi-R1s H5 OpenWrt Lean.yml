@@ -14,8 +14,8 @@ on:
   push:
     branches: 
       - master
-  #schedule:
-  #  - cron: '0 12 */3 * *'
+  schedule:
+    - cron: '0 12 * * *'
   # release:
   #   types: [published]
 
