@@ -6,7 +6,7 @@
 # <https://github.com/skytotwo/NanoPi-R1S-Build-By-Actions>
 #
 # Write by Jolly 2019/12/7
-# last update at 2019/12/19
+# last update at 2020/3/19
 
 name: NanoPi-R1s H5 OpenWrt Lean Build
 
