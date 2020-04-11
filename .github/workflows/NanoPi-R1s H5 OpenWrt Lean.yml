@@ -64,7 +64,7 @@ jobs:
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
-          git rebase d29fc8c1d8416fb5d8a03fb3e4217edd80e2f73d^ --onto upstream/master -X theirs
+          git rebase b6b408c8fad74c341eacfec43b08d981b146e6ea^ --onto upstream/master -X theirs
           sed -i '/ipv6/,+3d' package/base-files/files/root/setup.sh
           git checkout upstream/master -- feeds.conf.default
           cd package/lean/
