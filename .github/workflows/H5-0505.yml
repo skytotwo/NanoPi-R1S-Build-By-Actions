@@ -112,4 +112,3 @@ jobs:
         with:
           name: FriendlyWrt_NanoPi-R1S H5 Lean
           path: ./artifact/
-          
