@@ -62,6 +62,7 @@ jobs:
           echo '# CONFIG_V2RAY_COMPRESS_UPX is not set' >> configs/config_h5
           sed -i '/docker/Id;/containerd/Id;/runc/Id;/iptparser/Id' configs/config_h5 #fix compile error
           cd friendlywrt
+          git config merge.renameLimit 999999
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/lede && git fetch upstream
           git rebase 90bb1cf9c33e73de5019686b8bd495f689e675a4^ --onto upstream/master -X theirs
