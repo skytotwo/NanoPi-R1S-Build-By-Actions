@@ -59,36 +59,40 @@ jobs:
           cd friendlywrt-h5
           . ../remove_unused_config.sh
           cat ../app_config.seed >> configs/config_h5
-          echo '# CONFIG_V2RAY_COMPRESS_UPX is not set' >> configs/config_h5
+          sed -i '/sqm-scriptss/d;/kmod-sched/d;' configs/config_h5
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
           git checkout upstream/lede-17.01 -b tmp
-          #git checkout 33f7cb735300bd9a099995236ed768c8925fec75 -- target/linux/sunxi/image/
           git rm README.md
           git commit -m 'reset'
-          git checkout origin/master
+          git checkout master
           git rebase 90bb1cf9c33e73de5019686b8bd495f689e675a4^ --onto tmp -X theirs
           rm -f target/linux/allwinner-h5/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch target/linux/generic/hack-4.14/999-net-patch-linux-kernel-to-support-shortcut-fe.patch
           git checkout upstream/lede-17.01 -- feeds.conf.default
           sed -i -E 's/#(src-git.+)(helloworld.+)/\1\2/' feeds.conf.default
           cd package/lean/
           
-          #git rebase 90bb1cf9c33e73de5019686b8bd495f689e675a4^ --onto upstream/master -X theirs
-          #rm target/linux/allwinner-h5/patches-4.14/0001-net-thunderx-workaround-BGX-TX-Underflow-issue.patch
-          #git checkout upstream/master -- feeds.conf.default
-          #sed -i '5s/#src-git/src-git/g' feeds.conf.default
-          #cd package/lean/
-          rm -rf luci-theme-argon
-          git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+          [ ! -d luci-app-adguardhome ] && git clone https://github.com/rufengsuixing/luci-app-adguardhome
+          [ ! -d luci-app-mentohust ] && git clone https://github.com/BoringCat/luci-app-mentohust
+          [ ! -d mentohust ] && svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/mentohust
+          rm -rf luci-theme-argon*/ ../lean/luci-theme-argon/ && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon
+          rm -rf luci-theme-edge/ && git clone -b 18.06 https://github.com/garypang13/luci-theme-edge
+          rm -rf luci-theme-infinityfreedom/ && git clone https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom
+          rm -rf luci-app-chinadns-ng/ && git clone https://github.com/WuSiYu/luci-app-chinadns-ng
+          rm -rf openwrt-chinadns-ng/ && git clone https://github.com/pexcn/openwrt-chinadns-ng
+
           cd ../../
           git apply ../../enable_autocore.diff
+          
           sed -i '/uci commit luci/i\uci set luci.main.mediaurlbase="/luci-static/argon"' package/lean/default-settings/files/zzz-default-settings
           sed -i '/exit/i\chown -R root:root /usr/share/netdata/web' package/lean/default-settings/files/zzz-default-settings
           sed -i '/exit/i\find /etc/rc.d/ -name *docker* -delete' package/lean/default-settings/files/zzz-default-settings
           sed -i 's/option fullcone\t1/option fullcone\t0/' package/network/config/firewall/files/firewall.config
+          sed -i '/find.*wlan.*wc/a\WIFI_NUM=0' package/base-files/files/root/setup.sh
           sed -i '/8.8.8.8/d' package/base-files/files/root/setup.sh
-          echo -e '\nDYC Build\n'  >> package/base-files/files/etc/banner
+          echo 'wireguard' > package/base-files/files/etc/modules.d/10_wireguard
+          echo -e '\nDYC Build\n' >> package/base-files/files/etc/banner
           
       - name: Mod luci
         run: |
@@ -103,8 +107,18 @@ jobs:
           cp configs/config_h5 friendlywrt/.config
           cd friendlywrt
           ./scripts/feeds update -a && ./scripts/feeds install -a
-          make defconfig && make download -j8
-          make -s -j$(nproc) || make V=s -j1
+          #make defconfig && make download -j8
+          #make -s -j$(nproc) || make V=s -j1
+          
+          
+          sed -i '/STAMP_BUILT/d' feeds/packages/utils/runc/Makefile feeds/packages/utils/containerd/Makefile #fix compile error
+          cd ..
+
+          echo -e '\nCONFIG_TCP_CONG_ADVANCED=y' >> kernel/arch/arm/configs/sunxi_defconfig
+          echo -e '\nCONFIG_TCP_CONG_BBR=m' >> kernel/arch/arm/configs/sunxi_defconfig
+          sed -i 's/set -eu/set -u/' scripts/mk-friendlywrt.sh
+          sed -i 's/640/1000/' scripts/sd-fuse/mk-sd-image.sh
+          ./build.sh nanopi_r1s.mk
           
       - name: Build SD img
         run: |
