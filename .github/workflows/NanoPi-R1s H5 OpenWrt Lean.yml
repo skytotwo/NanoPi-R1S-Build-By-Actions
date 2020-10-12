@@ -69,7 +69,7 @@ jobs:
           cd friendlywrt
           git config --local user.email "action@github.com" && git config --local user.name "GitHub Action"
           git remote add upstream https://github.com/coolsnowwolf/openwrt && git fetch upstream
-          git checkout upstream/lede-17.01 -b tmp
+          #git checkout upstream/lede-17.01 -b tmp
           git rm README.md
           git commit -m 'reset'
           git checkout master
